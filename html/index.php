@@ -19,7 +19,7 @@
  */
 
 define('WEBACULA_VERSION', '7.0.0' . ', build 2014.10.01');
-define('BACULA_VERSION', 14); // Bacula Catalog version
+define('BACULA_VERSION', 15); // Bacula Catalog version
 
 define('ROOT_DIR', dirname(dirname(__FILE__)) );
 define('CACHE_DIR',  ROOT_DIR.'/data/cache' );
@@ -31,8 +31,9 @@ if ( APPLICATION_ENV == 'development') {
     ini_set('display_startup_errors','1');
     error_reporting(E_ALL|E_STRICT);
 } else {
-    ini_set('display_errors','0');
-    ini_set('display_startup_errors','0');
+    ini_set('display_errors','1');
+    ini_set('display_startup_errors','1');
+	error_reporting(E_ALL|E_STRICT);
 }
 
 // PATH_SEPARATOR  ":"
@@ -183,6 +184,8 @@ try {
     $db->getConnection();
 } catch (Zend_Db_Adapter_Exception $e) {
     echo '<pre>';
+	print_r($db);
+	print_r($db);
     // возможно СУБД не запущена
     throw new Zend_Exception("Fatal error: Can't connect to SQL server");
 }
@@ -224,7 +227,7 @@ Zend_Session::setSaveHandler(new MyClass_Session_SaveHandler_DbTable($config_ses
 Zend_Session::start();
 
 if ( APPLICATION_ENV == 'production') {
-    Zend_Session::regenerateId();
+   // Zend_Session::regenerateId();
 }
 
 /*
